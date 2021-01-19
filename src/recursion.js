@@ -7,31 +7,92 @@
 // Example: 5! = 5 x 4 x 3 x 2 x 1 = 120
 // factorial(5); // 120
 var factorial = function(n) {
+  // Edge Case
+  if (n < 0) {
+    return null;
+  }
+  // Base Case
+  if (n === 1 || n === 0) {
+    return 1;
+  }
+  //Recursive Case
+  return n * factorial(n-1);
+
 };
 
 // 2. Compute the sum of an array of integers.
 // sum([1,2,3,4,5,6]); // 21
 var sum = function(array) {
+  if (array.length === 0) {
+    return 0;
+  }
+  return array[0] + sum(array.slice(1));
 };
 
 // 3. Sum all numbers in an array containing nested arrays.
 // arraySum([1,[2,3],[[4]],5]); // 15
 var arraySum = function(array) {
+    var result = 0;
+  // base case
+  if (typeof array === 'number') {
+    return array;
+  }
+  // recursive case
+  if (Array.isArray(array)) {
+    array.forEach(function(item,index) {
+      return result += arraySum(item);
+    });
+  }
+  return result;
 };
 
 // 4. Check if a number is even.
 var isEven = function(n) {
+  n = Math.abs(n);
+  if (n > 1) {
+    return isEven(n-2);
+  }
+  if (n === 1) {
+    return false;
+  }
+  return true;
 };
 
 // 5. Sum all integers below a given integer.
 // sumBelow(10); // 45
 // sumBelow(7); // 21
 var sumBelow = function(n) {
+  if (n > 0) {
+    var isPos = true;
+  }
+  n = Math.abs(n);
+  // Base case
+  if (n === 0) {
+    return 0;
+  }
+  // Recursive case
+  n = n - 1;
+  return isPos ? n + sumBelow(n) : -n - sumBelow(n);
 };
 
 // 6. Get the integers within a range (x, y).
 // range(2,9); // [3,4,5,6,7,8]
 var range = function(x, y) {
+  if (x > y) {
+   var tempX = x
+   var tempY = y
+   y = tempX;
+   x = tempY;
+  }
+  if (y - x === 1 || y - x === 0 ) {
+    return [];
+  }
+  if (y - x === 2 || y - x === -2) {
+    return [x + 1];
+  }
+  var result = range(x, y - 1);
+  result.push(y - 1);
+  return tempX ? result.reverse() : result;
 };
 
 // 7. Compute the exponent of a number.
@@ -40,6 +101,16 @@ var range = function(x, y) {
 // exponent(4,3); // 64
 // https://www.khanacademy.org/computing/computer-science/algorithms/recursive-algorithms/a/computing-powers-of-a-number
 var exponent = function(base, exp) {
+
+  // Base Case
+  if (exp === 0) {
+    return 1;
+  }
+  if (exp < 0) {
+    return Number((1 / base * exponent(base, exp + 1)).toFixed(5));
+  }
+  // Recursive Case
+  return base * exponent(base, exp - 1);
 };
 
 // 8. Determine if a number is a power of two.
@@ -141,6 +212,7 @@ var countValuesInObj = function(obj, value) {
 // 24. Find all keys in an object (and nested objects) by a provided name and rename
 // them to a provided new name while preserving the value stored at that key.
 var replaceKeysInObj = function(obj, oldKey, newKey) {
+
 };
 
 // 25. Get the first n Fibonacci numbers. In the Fibonacci sequence, each subsequent
@@ -252,3 +324,4 @@ var mergeSort = function(array) {
 // obj1 === obj2 // false
 var clone = function(input) {
 };
+
